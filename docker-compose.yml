@@ -1,0 +1,41 @@
+services:
+  # omniapp-api:
+  #   build:
+  #     context: ./apps/api
+  #     dockerfile: Dockerfile
+  #   container_name: omniapp-api
+  #   ports:
+  #     - '3099:3099'
+  #   depends_on:
+  #     - mongodb
+  #   volumes:
+  #     - ./src:/usr/src/app/src
+  #   networks:
+  #     omniapp:
+  #       aliases:
+  #         - api
+
+  
+  mongodb:
+    container_name: omniapp-mongo
+    image: mongo:8.0
+    hostname: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=vulcore
+      - MONGO_INITDB_ROOT_PASSWORD=12341234
+    restart: always
+    ports:
+      - '27019:27017'
+    volumes:
+      - mongo-data:/var/lib/mongo/data
+    networks:
+      omniapp:
+        aliases:
+          - mongo
+
+networks:
+  omniapp:
+
+volumes:
+  mongo-data:
+    driver: local
